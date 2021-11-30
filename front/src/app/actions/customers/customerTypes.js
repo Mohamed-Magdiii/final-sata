@@ -1,0 +1,2 @@
+export const GET_ALL_CUSTOMERS = 'GET_ALL_CUSTOMERS';
+export const DELETE_USER_BY_ID = 'DELETE_USER_BY_ID';

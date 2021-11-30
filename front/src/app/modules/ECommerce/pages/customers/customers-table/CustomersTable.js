@@ -1,166 +1,114 @@
-// React bootstrap table next =>
-// DOCS: https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/
-// STORYBOOK: https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html
-import React, { useEffect, useMemo } from "react";
-import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory, {
-  PaginationProvider,
-} from "react-bootstrap-table2-paginator";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import * as actions from "../../../_redux/customers/customersActions";
-import {
-  getSelectRow,
-  getHandlerTableChange,
-  NoRecordsFoundMessage,
-  PleaseWaitMessage,
-  sortCaret,
-  headerSortingClasses,
-} from "../../../../../../_metronic/_helpers";
-import * as uiHelpers from "../CustomersUIHelpers";
-import * as columnFormatters from "./column-formatters";
-import { Pagination } from "../../../../../../_metronic/_partials/controls";
-import { useCustomersUIContext } from "../CustomersUIContext";
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+import {FaEdit} from 'react-icons/fa';
+import {AiFillDelete} from 'react-icons/ai';
+function CustomersTable() {
+  const [users, setUsers] = useState([]);
+  const displayUsers = () => {
+    return users.map((user, index) => {
+      return (
+        <tbody key={index}>
+          <tr className="text-center border-3 m-auto">
+            <td className="px-3">
+              <div className="d-flex align-items-center">
+                <div className="d-flex flex-column">
+                  <span
+                    className="text-dark fw-bolder text-hover-primary mb-1 fs-6">
+                    {index+1}
+                  </span>
+                </div>
+              </div>
+            </td>
+            <td className="px-3 mt-4">
+              <div className="d-flex flex-column">
+                <span
+                  className="text-dark fw-bolder text-hover-primary mb-1 fs-6">
+                  {user.username}
+                </span>
+              </div>
+            </td>
+            <td className="px-3">
+              <div className="d-flex flex-column">
+                <span
+                  className="text-dark fw-bolder text-hover-primary mb-1 fs-6">
+                  {user.email}
+                </span>
 
-export function CustomersTable() {
-  // Customers UI Context
-  const customersUIContext = useCustomersUIContext();
-  const customersUIProps = useMemo(() => {
-    return {
-      ids: customersUIContext.ids,
-      setIds: customersUIContext.setIds,
-      queryParams: customersUIContext.queryParams,
-      setQueryParams: customersUIContext.setQueryParams,
-      openEditCustomerDialog: customersUIContext.openEditCustomerDialog,
-      openDeleteCustomerDialog: customersUIContext.openDeleteCustomerDialog,
-    };
-  }, [customersUIContext]);
-
-  // Getting curret state of customers list from store (Redux)
-  const { currentState } = useSelector(
-    (state) => ({ currentState: state.customers }),
-    shallowEqual
-  );
-  const { totalCount, entities, listLoading } = currentState;
-
-  // Customers Redux state
-  const dispatch = useDispatch();
-  useEffect(() => {
-    // clear selections list
-    customersUIProps.setIds([]);
-    // server call by queryParams
-    dispatch(actions.fetchCustomers(customersUIProps.queryParams));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customersUIProps.queryParams, dispatch]);
-  // Table columns
-  const columns = [
-    {
-      dataField: "id",
-      text: "ID",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
-    },
-    {
-      dataField: "firstName",
-      text: "Firstname",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
-    },
-    {
-      dataField: "lastName",
-      text: "Lastname",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
-    },
-    {
-      dataField: "email",
-      text: "Email",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
-    },
-    {
-      dataField: "gender",
-      text: "Gender",
-      sort: false,
-      sortCaret: sortCaret,
-    },
-    {
-      dataField: "status",
-      text: "Status",
-      sort: true,
-      sortCaret: sortCaret,
-      formatter: columnFormatters.StatusColumnFormatter,
-      headerSortingClasses,
-    },
-    {
-      dataField: "type",
-      text: "Type",
-      sort: true,
-      sortCaret: sortCaret,
-      formatter: columnFormatters.TypeColumnFormatter,
-    },
-    {
-      dataField: "action",
-      text: "Actions",
-      formatter: columnFormatters.ActionsColumnFormatter,
-      formatExtraData: {
-        openEditCustomerDialog: customersUIProps.openEditCustomerDialog,
-        openDeleteCustomerDialog: customersUIProps.openDeleteCustomerDialog,
-      },
-      classes: "text-right pr-0",
-      headerClasses: "text-right pr-3",
-      style: {
-        minWidth: "100px",
-      },
-    },
-  ];
-  // Table pagination properties
-  const paginationOptions = {
-    custom: true,
-    totalSize: totalCount,
-    sizePerPageList: uiHelpers.sizePerPageList,
-    sizePerPage: customersUIProps.queryParams.pageSize,
-    page: customersUIProps.queryParams.pageNumber,
+              </div>
+            </td>
+            <td className="px-3">
+              <div className="d-flex flex-column">
+                <span
+                  className="text-dark fw-bolder text-hover-primary mb-1 fs-6">
+                  {user.role}
+                </span>
+              </div>
+            </td>
+            <td className="px-3">
+              <div className="d-flex align-items-center" >
+                <div className="d-flex flex-column w-100">
+                  <span
+                    className="text-dark fw-bolder text-hover-primary mb-1 fs-6">
+                    {user.telephone}
+                  </span>
+                </div>
+              </div>
+            </td>
+            <td className="px-3">
+              <div className="d-flex align-items-center">
+                <div className="d-flex flex-column w-100">
+                  <span
+                    className="text-dark fw-bolder text-hover-primary mb-1 fs-6">
+                    {user.mobile}
+                  </span>
+                </div>
+              </div>
+            </td>
+            <td className="border text-center">
+              <FaEdit className="cursor-pointer text-primary mx-3" style={{fontSize: '18px'}}/>
+              <AiFillDelete className="text-danger cursor-pointer" style={{fontSize: '18px'}}/>
+            </td>
+          </tr>
+        </tbody>
+      );
+    });
   };
+  useEffect(() => {
+    axios.get('http://localhost:4000/api/users', {
+      headers: {
+        'x-auth-token': localStorage.getItem('authToken')
+      }
+    }).then((response) => {
+      setUsers(response.data);
+    }).catch((err) => {
+      console.log(err.response);
+    })
+  }, [])
   return (
-    <>
-      <PaginationProvider pagination={paginationFactory(paginationOptions)}>
-        {({ paginationProps, paginationTableProps }) => {
-          return (
-            <Pagination
-              isLoading={listLoading}
-              paginationProps={paginationProps}
-            >
-              <BootstrapTable
-                wrapperClasses="table-responsive"
-                bordered={false}
-                classes="table table-head-custom table-vertical-center overflow-hidden"
-                bootstrap4
-                remote
-                keyField="id"
-                data={entities === null ? [] : entities}
-                columns={columns}
-                defaultSorted={uiHelpers.defaultSorted}
-                onTableChange={getHandlerTableChange(
-                  customersUIProps.setQueryParams
-                )}
-                selectRow={getSelectRow({
-                  entities,
-                  ids: customersUIProps.ids,
-                  setIds: customersUIProps.setIds,
-                })}
-                {...paginationTableProps}
-              >
-                <PleaseWaitMessage entities={entities} />
-                <NoRecordsFoundMessage entities={entities} />
-              </BootstrapTable>
-            </Pagination>
-          );
-        }}
-      </PaginationProvider>
-    </>
-  );
+    <div className="card-body py-3">
+      <div className="table-responsive rounded">
+        <table className="table table-hover align-middle gs-0 gy-4">
+          <thead>
+            <tr>
+              <td className="min-w-125px">ID</td>
+              <td className="min-w-125px text-center">UserName</td>
+              <td className="min-w-125px text-center">Email</td>
+              <td className="min-w-125px text-center">Role</td>
+              <td className="min-w-125px text-center">Telephone</td>
+              <td className="min-w-125px text-center">Mobile</td>
+              <td className="min-w-125px text-center">Action</td>
+            </tr>
+          </thead>
+          <>
+            {
+              displayUsers()
+            }
+          </>
+        </table>
+      </div>
+    </div>
+  )
 }
+
+export default CustomersTable
+

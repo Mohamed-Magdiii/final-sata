@@ -1,36 +1,14 @@
-// Form is based on Formik
-// Data validation is based on Yup
-// Please, be familiar with article first:
-// https://hackernoon.com/react-form-validation-with-formik-and-yup-8b76bda62e10
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import { Modal } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
+// import * as Yup from "yup";
+// import axios from 'axios';
+import {register} from '../../../../Auth/_redux/authCrud';
 import {
   Input,
   Select,
-  // DatePickerField,
 } from "../../../../../../_metronic/_partials/controls";
-
-// Validation schema
-const CustomerEditSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .min(3, "Minimum 3 symbols")
-    .max(50, "Maximum 50 symbols")
-    .required("Firstname is required"),
-  lastName: Yup.string()
-    .min(3, "Minimum 3 symbols")
-    .max(50, "Maximum 50 symbols")
-    .required("Lastname is required"),
-  email: Yup.string()
-    .email("Invalid email")
-    .required("Email is required"),
-  userName: Yup.string().required("Username is required"),
-  dateOfBbirth: Yup.mixed()
-    .nullable(false)
-    .required("Date of Birth is required"),
-  ipAddress: Yup.string().required("IP Address is required"),
-});
 
 export function CustomerEditForm({
   saveCustomer,
@@ -38,17 +16,34 @@ export function CustomerEditForm({
   actionsLoading,
   onHide,
 }) {
+  const [fullname, setfullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [type, setType] = useState("");
+  const typeLists = ['user', 'admin', "vendor", "moderator"];
+  const history = useHistory();
+  const handleSubmit = () =>{
+    register(fullname, email, password, phone, mobile, typeLists[parseInt(type) -1])
+    .then(()=>{
+      history.push('/e-commerce/customers')
+    }).catch((error)=>{
+      console.log(error.response)
+    })
+  }
   return (
     <>
       <Formik
         enableReinitialize={true}
         initialValues={customer}
-        validationSchema={CustomerEditSchema}
+        // validationSchema={CustomerEditSchema}
         onSubmit={(values) => {
           saveCustomer(values);
         }}
       >
-        {({ handleSubmit }) => (
+        {() =>
+        (
           <>
             <Modal.Body className="overlay overlay-block cursor-default">
               {actionsLoading && (
@@ -60,10 +55,12 @@ export function CustomerEditForm({
                 <div className="form-group row">
                   <div className="col-lg-4">
                     <Field
-                      name="fullName"
+                      name="fullname"
                       component={Input}
                       placeholder="Full Name"
                       label="Full Name"
+                      value = {fullname}
+                      onChange = {(e) => setfullname(e.target.value)}
                     />
                   </div>
                   <div className="col-lg-4">
@@ -73,14 +70,19 @@ export function CustomerEditForm({
                       component={Input}
                       placeholder="Email"
                       label="Email"
+                      value = {email}
+                      onChange = {(e) => setEmail(e.target.value)}
                     />
                   </div>
                   <div className="col-lg-4">
                     <Field
+                      type="password"
                       name="password"
                       component={Input}
                       placeholder="Password"
                       label="Password"
+                      value = {password}
+                      onChange = {(e) => setPassword(e.target.value)}
                     />
                   </div>
                 </div>
@@ -92,6 +94,8 @@ export function CustomerEditForm({
                       component={Input}
                       placeholder="Phone"
                       label="Phone"
+                      value = {phone}
+                      onChange = {(e) => setPhone(e.target.value)}
                     />
                   </div>
                   <div className="col-lg-4">
@@ -101,10 +105,12 @@ export function CustomerEditForm({
                       component={Input}
                       placeholder="Mobile"
                       label="Mobile"
+                      value = {mobile}
+                      onChange = {(e) => setMobile(e.target.value)}
                     />
                   </div>
                   <div className="col-lg-4">
-                    <Select name="type" label="Type">
+                    <Select name="role" label="Type" value={type} onChange={(e)=> setType(e.target.value)}>
                       <option value="1">User</option>
                       <option value="2">Admin</option>
                       <option value="3">Vendor</option>
@@ -131,7 +137,8 @@ export function CustomerEditForm({
               </button>
             </Modal.Footer>
           </>
-        )}
+        )
+        }
       </Formik>
     </>
   );

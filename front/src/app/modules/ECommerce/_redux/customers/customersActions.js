@@ -1,8 +1,23 @@
+import axios from "axios";
 import * as requestFromServer from "./customersCrud";
+import {GET_ALL_CUSTOMERS} from './customersType';
 import {customersSlice, callTypes} from "./customersSlice";
 
 const {actions} = customersSlice;
 
+// export const fetchCustomers = queryParams => dispatch => {
+//   dispatch(actions.startCall({ callType: callTypes.list }));
+//   return requestFromServer
+//     .findCustomers(queryParams)
+//     .then(response => {
+//       const { totalCount, entities } = response.data;
+//       dispatch(actions.customersFetched({ totalCount, entities }));
+//     })
+//     .catch(error => {
+//       error.clientMessage = "Can't find customers";
+//       dispatch(actions.catchError({ error, callType: callTypes.list }));
+//     });
+// };
 export const fetchCustomers = queryParams => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.list }));
   return requestFromServer
@@ -100,3 +115,28 @@ export const deleteCustomers = ids => dispatch => {
       dispatch(actions.catchError({ error, callType: callTypes.action }));
     });
 };
+
+
+/* Added By Me */
+
+
+export const fetchUser = (users) =>{
+  return {
+    type: GET_ALL_CUSTOMERS,
+    payload: users
+  }
+}
+
+export const getAllUsers = () =>{
+  return (dispatch) =>{
+    axios.get(`${process.env.REACT_APP_API_URL}/api/users`,{
+      headers: {
+        'x-auth-token' : localStorage.getItem('authToken')
+      }
+    }).then((response)=>{
+      dispatch(fetchUser(response.data));
+    }).catch((error)=>{
+      alert('Error in getAll Users')
+    })
+  }
+}

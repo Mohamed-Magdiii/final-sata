@@ -4,16 +4,14 @@ import { LayoutSplashScreen, ContentRoute } from "../_metronic/layout";
 import { BuilderPage } from "./pages/BuilderPage";
 import { MyPage } from "./pages/MyPage";
 import { DashboardPage } from "./pages/DashboardPage";
+import CustomerPage from './pages/CustomerPage';
+import Category from "./pages/Category";
+import ProductsPage from "./pages/ProductsPage";
+import ProductForm from "./pages/ProductForm";
 
-const GoogleMaterialPage = lazy(() =>
-  import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
-);
-const ReactBootstrapPage = lazy(() =>
-  import("./modules/ReactBootstrapExamples/ReactBootstrapPage")
-);
-const ECommercePage = lazy(() =>
-  import("./modules/ECommerce/pages/eCommercePage")
-);
+// const ECommercePage = lazy(() =>
+//   import("./modules/ECommerce/pages/eCommercePage")
+// );
 const UserProfilepage = lazy(() =>
   import("./modules/UserProfile/UserProfilePage")
 );
@@ -28,9 +26,13 @@ export default function BasePage() {
         <ContentRoute path="/dashboard" component={DashboardPage} />
         <ContentRoute path="/builder" component={BuilderPage} />
         <ContentRoute path="/my-page" component={MyPage} />
-        <Route path="/google-material" component={GoogleMaterialPage} />
-        <Route path="/react-bootstrap" component={ReactBootstrapPage} />
-        <Route path="/e-commerce" component={ECommercePage} />
+        <ContentRoute path="/customer-page" component={CustomerPage} />
+        <ContentRoute path="/categories" component={Category} />
+        <ContentRoute path="/products-page" exact component={ProductsPage} />
+        <ContentRoute path="/products-page/new" exact component={ProductForm} />
+        {/* <Route path="/google-material" component={GoogleMaterialPage} /> */}
+        {/* <Route path="/react-bootstrap" component={ReactBootstrapPage} /> */}
+        {/* <Route path="/e-commerce" component={ECommercePage} /> */}
         <Route path="/user-profile" component={UserProfilepage} />
         <Redirect to="error/error-v1" />
       </Switch>

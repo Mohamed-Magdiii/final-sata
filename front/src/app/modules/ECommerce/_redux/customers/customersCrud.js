@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const CUSTOMERS_URL = "api/customers";
+export const MY_CUSTOMERS_URL = "http://localhost:4000/api/users";
 
 // CREATE =>  POST: add a new customer to the server
 export function createCustomer(customer) {
@@ -9,7 +10,12 @@ export function createCustomer(customer) {
 
 // READ
 export function getAllCustomers() {
-  return axios.get(CUSTOMERS_URL);
+  // return axios.get(CUSTOMERS_URL);
+  return axios.get(MY_CUSTOMERS_URL, {
+    headers: {
+      'x-auth-token' : localStorage.getItem('authToken')
+    }
+  });
 }
 
 export function getCustomerById(customerId) {

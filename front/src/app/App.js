@@ -10,7 +10,7 @@ export default function App({ store, persistor, basename }) {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={<LayoutSplashScreen />}>
-        {/* <React.Suspense fallback={<LayoutSplashScreen />}> */}
+        <React.Suspense fallback={<LayoutSplashScreen />}>
           <BrowserRouter basename={basename}>
             <MaterialThemeProvider>
               <I18nProvider>
@@ -20,7 +20,7 @@ export default function App({ store, persistor, basename }) {
               </I18nProvider>
             </MaterialThemeProvider>
           </BrowserRouter>
-        {/* </React.Suspense> */}
+        </React.Suspense>
       </PersistGate>
     </Provider>
   );

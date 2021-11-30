@@ -21,10 +21,6 @@ const store = configureStore({
   enhancers: [reduxBatch]
 });
 
-/**
- * @see https://github.com/rt2zz/redux-persist#persiststorestore-config-callback
- * @see https://github.com/rt2zz/redux-persist#persistor-object
- */
 export const persistor = persistStore(store);
 
 sagaMiddleware.run(rootSaga);

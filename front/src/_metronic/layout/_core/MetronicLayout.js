@@ -4,7 +4,6 @@ import { HtmlClassService } from "./HTMLClassService";
 
 const LAYOUT_CONFIG_KEY =
   process.env.REACT_APP_LAYOUT_CONFIG_KEY || "LayoutConfig";
-
 function getConfig() {
   const ls = localStorage.getItem(LAYOUT_CONFIG_KEY);
   if (ls) {
