@@ -12,15 +12,15 @@ const ProductShema = mongoose.Schema(
     title_ar: {
       type: String,
     },
-    username:{
-      type:String,
+    username: {
+      type: String,
     },
     categoryId: {
       type: String,
       ref: "Category",
     },
-    categoryTitle:{
-      type:String,
+    categoryTitle: {
+      type: String,
     },
     description: {
       type: String,
@@ -31,15 +31,21 @@ const ProductShema = mongoose.Schema(
       required: true,
     },
     color: {
-      type: Array,
+      type:String
     },
     size: {
       type: Array,
     },
-
-    inStock: {
+    store: {
       type: Number,
       default: 1,
+    },
+    sale: {
+      string: Number,
+    },
+    onsale: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

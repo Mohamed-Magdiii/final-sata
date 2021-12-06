@@ -7,6 +7,7 @@ import SVG from "react-inlinesvg";
 import {AiOutlineHome} from 'react-icons/ai';
 import {FiChevronRight} from 'react-icons/fi';
 import {FaUser} from 'react-icons/fa';
+import {ImLocation} from 'react-icons/im';
 import {MdOutlineProductionQuantityLimits} from 'react-icons/md';
 import {BiCategoryAlt} from 'react-icons/bi';
 import { toAbsoluteUrl, checkIsActive } from "../../../../_helpers";
@@ -104,6 +105,85 @@ export function AsideMenuList({ layoutProps }) {
                     <span />
                   </i>
                   <span className="menu-text">Add</span>
+                </NavLink>
+              </li>
+            </ul>
+          </div>
+        </li>
+       < li
+          className={`menu-item menu-item-submenu ${getMenuItemActive(
+            "/country-page",
+            true
+          )}`}
+          aria-haspopup="true"
+          data-menu-toggle="hover"
+        >
+          <NavLink className="menu-link menu-toggle" to="/shipping">
+            <span className="svg-icon menu-icon">
+                       
+            <ImLocation className="fs-4"/>
+ </span>
+            <span className="menu-text">Shipping</span>
+            <FiChevronRight className='text-muted mt-2' style={{fontSize: '1.2rem'}} />
+          </NavLink>
+          <div className="menu-submenu">
+            <i className="menu-arrow" />
+            <ul className="menu-subnav">
+              <li className="menu-item menu-item-parent" aria-haspopup="true">
+                <span className="menu-link">
+                  <span className="menu-text">shipping</span>
+                </span>
+              </li>
+              <li
+                className={`menu-item ${getMenuItemActive(
+                  "/shipping"
+                )}`}
+                aria-haspopup="true"
+              >
+                <NavLink className="menu-link" to="/shipping/shipping-list">
+                  <i className="menu-bullet menu-bullet-dot">
+                    <span />
+                  </i>
+                  <span className="menu-text">list</span>
+                </NavLink>
+              </li>
+              <li
+                className={`menu-item ${getMenuItemActive(
+                  "/shipping"
+                )}`}
+                aria-haspopup="true"
+              >
+                <NavLink className="menu-link" to="/shipping/country-form">
+                  <i className="menu-bullet menu-bullet-dot">
+                    <span />
+                  </i>
+                  <span className="menu-text">country</span>
+                </NavLink>
+              </li>
+              <li
+                className={`menu-item ${getMenuItemActive(
+                  "/shipping"
+                )}`}
+                aria-haspopup="true"
+              >
+                <NavLink className="menu-link" to="/shipping/city-form">
+                  <i className="menu-bullet menu-bullet-dot">
+                    <span />
+                  </i>
+                  <span className="menu-text">city</span>
+                </NavLink>
+              </li>
+              <li
+                className={`menu-item ${getMenuItemActive(
+                  "/shipping"
+                )}`}
+                aria-haspopup="true"
+              >
+                <NavLink className="menu-link" to="/shipping/shipping-new">
+                  <i className="menu-bullet menu-bullet-dot">
+                    <span />
+                  </i>
+                  <span className="menu-text">shipping</span>
                 </NavLink>
               </li>
             </ul>

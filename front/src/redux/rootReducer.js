@@ -8,6 +8,7 @@ import {remarksSlice} from "../app/modules/ECommerce/_redux/remarks/remarksSlice
 import {specificationsSlice} from "../app/modules/ECommerce/_redux/specifications/specificationsSlice";
 import userReducer from '../Reducer/customerReducer';
 import products from '../Reducer/products';
+import country from '../Reducer/country';
 
 
 export const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ export const rootReducer = combineReducers({
   specifications: specificationsSlice.reducer,
   customer: userReducer,
   products,
+  country
 });
 
 export function* rootSaga() {

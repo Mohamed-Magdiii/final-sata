@@ -47,6 +47,16 @@ export function HeaderMenu({ layoutProps }) {
             {layoutProps.rootArrowEnabled && <i className="menu-arrow" />}
           </NavLink>
         </li>
+        <li
+          className={`menu-item menu-item-rel ${getMenuItemActive(
+            "/products-page"
+          )}`}
+        >
+          <NavLink className="menu-link" to="/products-page">
+            <span className="menu-text">Products</span>
+            {layoutProps.rootArrowEnabled && <i className="menu-arrow" />}
+          </NavLink>
+        </li>
       </ul>
     </div>
   );

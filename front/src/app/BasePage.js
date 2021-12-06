@@ -8,6 +8,10 @@ import CustomerPage from './pages/CustomerPage';
 import Category from "./pages/Category";
 import ProductsPage from "./pages/ProductsPage";
 import ProductForm from "./pages/ProductForm";
+import CountryForm from "./pages/shippingRegion/CountryForm";
+import CityForm from "./pages/shippingRegion/CityForm";
+import ShippingList from "./pages/shippingRegion/ShippingList";
+import ShippingForm from "./pages/shippingRegion/ShippingForm";
 
 // const ECommercePage = lazy(() =>
 //   import("./modules/ECommerce/pages/eCommercePage")
@@ -30,6 +34,10 @@ export default function BasePage() {
         <ContentRoute path="/categories" component={Category} />
         <ContentRoute path="/products-page" exact component={ProductsPage} />
         <ContentRoute path="/products-page/new" exact component={ProductForm} />
+        <ContentRoute path="/shipping/country-form" exact component={CountryForm} />
+        <ContentRoute path="/shipping/city-form" exact component={CityForm} />
+        <ContentRoute path="/shipping/shipping-list" exact component={ShippingList} />
+        <ContentRoute path="/shipping/shipping-new" exact component={ShippingForm} />
         {/* <Route path="/google-material" component={GoogleMaterialPage} /> */}
         {/* <Route path="/react-bootstrap" component={ReactBootstrapPage} /> */}
         {/* <Route path="/e-commerce" component={ECommercePage} /> */}

@@ -13,12 +13,17 @@ app.get('/' , (req,res)=>{
 //Use Middleware
 app.use(express.json({extended:false}))
 app.use(cors())
+app.use('/public',express.static('./public'))
 app.use(bodyparser.json())
 //API Routes
 app.use('/api/auth' , require('./routes/api/auth'))
 app.use('/api/users' , require('./routes/api/users'))
 app.use('/api/categories' , require('./routes/api/categories'))
 app.use('/api/products' , require('./routes/api/products'))
+app.use('/api/country' , require('./routes/api/country'))
+app.use('/api/city' , require('./routes/api/city'))
+app.use('/api/city' , require('./routes/api/city'))
+app.use('/api/blog' , require('./routes/api/blog'))
 
 //App listen on Port 4000
 const PORT = process.env.PORT || 4000
